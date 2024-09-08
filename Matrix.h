@@ -24,6 +24,7 @@ public:
 	vector<double> operator*(vector<double>& b);
 	Vector operator*(Vector& b);
 	Matrix T();
+	double Det2();
 	Matrix Inv2();
 	Matrix Inversed(Matrix& Inv);
 	

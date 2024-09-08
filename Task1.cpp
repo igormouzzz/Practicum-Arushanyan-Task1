@@ -12,7 +12,7 @@ double Task1::StepSplittingMethod(double (*f)(Vector x), Vector& xk, Vector& hk)
 	double alpha, beta;
 	double alpha_k;
 
-	double step_max = 2;
+	double step_max = 10;
 
 	beta = 0.1;
 	alpha = beta;
@@ -22,9 +22,11 @@ double Task1::StepSplittingMethod(double (*f)(Vector x), Vector& xk, Vector& hk)
 		alpha = mu * beta;
 		while (!(phi(alpha) <= phi(beta)) && alpha <= step_max)
 		{
-			alpha = mu * beta;
+			//alpha = mu * beta;
 			cout << 1 << endl;
+			cout << "alpha = " << alpha << endl;
 			cout << phi(alpha) << "\t" << phi(beta) << endl;
+			alpha = mu * alpha;
 		}
 		alpha_k = alpha;
 	}
@@ -32,11 +34,13 @@ double Task1::StepSplittingMethod(double (*f)(Vector x), Vector& xk, Vector& hk)
 	{
 		cout << f(xk + hk * alpha) << "\t" << f(xk) << endl;
 		alpha = lambda * beta;
-		while (!(f(xk + hk * alpha) < f(xk)))
+		while (!(f(xk + hk * alpha) <= f(xk)) && alpha >= 1e-10)
 		{
-			alpha = lambda * beta;
+			//alpha = lambda * beta;
 			cout << 2 << endl;
+			cout << "alpha = " << alpha << endl;
 			cout << f(xk + hk*alpha) << "\t" << f(xk) << endl;
+			alpha = lambda * alpha;
 		}
 		alpha_k = alpha;
 	}
@@ -191,9 +195,14 @@ void Task1::SecondMethod(double (*f)(Vector x), const double epsilon, Vector& x0
 
 		d2f[2] = 0.5 * (fyx4 + fy4x);
 
-		vectorized_hessian = { { d2f[0], d2f[2]}, {d2f[2], d2f[1]} };
+		vectorized_hessian = { {d2f[0], d2f[2]}, {d2f[2], d2f[1]} };
 		He = Matrix(vectorized_hessian);
 		cout << He << endl;
+		if (std::fabs(He.Det2()) < 1e-10)
+		{
+			x = x0; cout << "det = 0" << endl;
+			break;
+		}
 		hk_1 = He.Inv2() * Df * (-1);
 
 		cout << "xk_1 = " << xk_1;
@@ -226,6 +235,7 @@ void Task1::main_func()
 	Vector x0(x00); Vector x(x0.GetSize());
 
 	FirstMethod(f, epsilon, x0, x);
+	system("pause");
 	SecondMethod(f, epsilon, x, x);
 
 	cout << "Program has been completed successfully!" << endl;

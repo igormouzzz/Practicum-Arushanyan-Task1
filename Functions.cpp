@@ -29,12 +29,12 @@ double f5(Vector x)
 double f6(Vector x)
 {
 	double x1 = x.v[0], x2 = x.v[1];
-	return 0;
+	return -cos((x1 * x1 - 2 * x1 * x2 + 2 * x2 * x2 + 4 * x2 + 4)/100);
 }
 double f7(Vector x)
 {
 	double x1 = x.v[0], x2 = x.v[1];
-	return 0;
+	return exp(x1 * x1 + x2 * x2);
 }
 double f8(Vector x)
 {

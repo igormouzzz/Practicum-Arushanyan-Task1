@@ -175,6 +175,10 @@ Matrix Matrix::T()
 	}
 	return S;
 }
+double Matrix::Det2()
+{
+	return a[0][0] * a[1][1] - a[1][0] * a[0][1];
+}
 Matrix Matrix::Inv2()
 {
 	Matrix Y(2, 2);
