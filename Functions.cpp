@@ -19,7 +19,7 @@ double f3(Vector x)
 double f4(Vector x)
 {
 	double x1 = x.v[0], x2 = x.v[1];
-	return x1 * x1 - 2 * x1 * x2 + x2 * x2 + 100;
+	return x1 * x1 - 2 * x1 * x2 + 2 * x2 * x2 - 2*x2 + 1;
 }
 double f5(Vector x)
 {

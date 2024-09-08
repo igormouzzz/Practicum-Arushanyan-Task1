@@ -17,6 +17,8 @@ public:
 
 	size_t GetSize();
 
+	friend class Matrix;
+
 	friend double l1_norm(Vector& x);
 	friend double l2_norm(Vector& x);
 	friend double l2_norm_square(Vector& x);

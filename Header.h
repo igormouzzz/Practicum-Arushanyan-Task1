@@ -15,10 +15,12 @@
 
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
 class Vector;
+class Matrix;
 
 double l1_norm(Vector& x);
 double l2_norm(Vector& x);

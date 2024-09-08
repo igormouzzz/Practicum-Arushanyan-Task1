@@ -1,9 +1,13 @@
 #include "Header.h"
-#include "Vector.h"
+#include "Matrix.h"
 
 namespace Task1		// 1 1
 {
+	double Derivative(const std::function<double(double)>& phi, double t, double tau);
+
 	double StepSplittingMethod(double (*f)(Vector x), Vector& xk, Vector& hk);
-	void RunCalculation(double (*f)(Vector x), const double epsilon, Vector& x0);
+	double NewtonMethod(double (*f)(Vector x), Vector& xk, Vector& hk, double epsilon);
+	void FirstMethod(double (*f)(Vector x), const double epsilon, Vector& x0, Vector& x);
+	void SecondMethod(double (*f)(Vector x), const double epsilon, Vector& x0, Vector& x);
 	void main_func();
 }
