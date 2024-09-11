@@ -27,7 +27,11 @@ public:
 	double Det2();
 	Matrix Inv2();
 	Matrix Inversed(Matrix& Inv);
+
+	void Move(vector<row> rows);
 	
+	Vector Gauss(Vector& b);
+
 	friend class Vector;
 	friend ostream& operator<<(ostream& cout, const Matrix& b);
 };

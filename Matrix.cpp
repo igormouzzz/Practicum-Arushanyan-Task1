@@ -243,6 +243,61 @@ Matrix Matrix::Inversed(Matrix& Inv)
 	//return Inv;
 }
 
+void Matrix::Move(vector<row> rows)
+{
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = rows[i][j];
+		}
+	}
+}
+
+Vector Matrix::Gauss(Vector& b)
+{
+	if (l2_norm_square(b) < 1e-30) return Vector(b.GetSize());
+
+	for (int i = 0; i < N - 1; i++) {
+		// Поиск максимального элемента в столбце
+		int maxi = i;
+		double max_value = std::abs(a[i][i]);
+		for (int j = i + 1; j < N; j++) {
+			if (std::abs(a[j][i]) > max_value) {
+				maxi = j;
+				max_value = std::abs(a[j][i]);
+			}
+		}
+
+		// Перестановка строк, чтобы максимальный элемент был на диагонали
+		if (maxi != i) {
+			std::swap(a[i], a[maxi]);
+			std::swap(b.v[i], b.v[maxi]);
+		}
+
+		// Преобразование текущей строки и строк ниже
+		for (int j = i + 1; j < N; j++) {
+			double factor = a[j][i] / a[i][i];
+			for (int k = i; k < M; k++) {
+				a[j][k] -= factor * a[i][k];
+			}
+			b.v[j] -= factor * b.v[i];
+		}
+	}
+
+	// Обратный ход
+	std::vector<double> x(N);
+	for (int i = N - 1; i >= 0; i--) {
+		double sum = 0;
+		for (int j = i + 1; j < M; j++) {
+			sum += a[i][j] * x[j];
+		}
+		x[i] = (b.v[i] - sum) / a[i][i];
+	}
+
+	return x;
+}
+
 ostream& operator<<(ostream& cout, const Matrix& b)
 {
 	for (int i = 0; i < b.N; i++)

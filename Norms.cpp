@@ -10,7 +10,10 @@ double l2_norm(Vector& x)
 }
 double l2_norm_square(Vector& x)
 {
-	return std::accumulate(x.v.begin(), x.v.end(), 0, [](double total, double value) { return total + value * value; });
+	//return std::accumulate(x.v.begin(), x.v.end(), 0, [](double total, double value) { return total + value * value; });
+	double s = 0;
+	for (int i = 0; i < x.v.size(); i++) s += x.v[i] * x.v[i];
+	return s;
 }
 double l_inf_norm(Vector& x)
 {
