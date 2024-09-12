@@ -27,6 +27,7 @@ Vector& Vector::operator=(const vector<double>& vec)
 	v.clear();
 	v.resize(vec.size());
 	for (int i = 0; i < v.size(); i++) v[i] = vec[i];
+	return *this;
 }
 Vector Vector::operator+(const Vector& b)
 {
@@ -59,7 +60,7 @@ size_t Vector::GetSize()
 ostream& operator<<(ostream& cout, Vector& b)
 {
 	int size = b.v.size();
-	if (size != 0) cout << "("; else return;
+	if (size != 0) cout << "("; else return cout;
 	for (int i = 0; i < size - 1; i++) cout << b.v[i] << ", ";
 	cout << b.v[size - 1] << ")" << endl;
 	return cout;

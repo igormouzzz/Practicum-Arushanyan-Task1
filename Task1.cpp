@@ -1,5 +1,6 @@
 #include "Task1.h"
 
+
 double Task1::StepSplittingMethod(double (*f)(Vector x), Vector& xk, Vector& hk)
 {
 	auto phi = [&](double t) { return f(xk + hk * t); };
@@ -7,39 +8,31 @@ double Task1::StepSplittingMethod(double (*f)(Vector x), Vector& xk, Vector& hk)
 	double alpha, beta;
 	double alpha_k;
 
-	double step_max = 100;
+	double alpha_max = 10;
 
 	beta = 0.1;
 	alpha = beta;
 
-	if (f(xk + hk * alpha) <= f(xk))
+	if (f(xk + hk * alpha) < f(xk))
 	{
-		alpha = mu * beta;
-		while (!(phi(alpha) < phi(beta)) && alpha <= step_max)
+		//cout << phi(alpha) << "\t" << phi(0) << endl;
+		while (phi(alpha) < phi(beta) && alpha <= alpha_max);
 		{
-			//alpha = mu * beta;
+			alpha_k = alpha;
+			alpha *= mu;
 			cout << 1 << endl;
-			cout << "alpha = " << alpha << endl;
-			cout << phi(alpha) << "\t" << phi(beta) << endl;
-			alpha = mu * alpha;
-		}
-		alpha_k = alpha;
+		} 
 	}
 	else
 	{
-		cout << f(xk + hk * alpha) << "\t" << f(xk) << endl;
-		alpha = lambda * beta;
-		while (!(f(xk + hk * alpha) < f(xk)) && alpha >= 1e-10)
+		do
 		{
-			//alpha = lambda * beta;
+			alpha_k = alpha;
+			alpha *= lambda;
 			cout << 2 << endl;
-			cout << "alpha = " << alpha << endl;
-			cout << f(xk + hk*alpha) << "\t" << f(xk) << endl;
-			alpha = lambda * alpha;
-		}
-		alpha_k = alpha;
+		} 
+		while (!(f(xk + hk * alpha) < f(xk)));
 	}
-
 	return alpha_k;
 }
 
@@ -47,7 +40,7 @@ double Task1::NewtonMethod(double (*f)(Vector x), Vector& xk, Vector& hk, double
 {
 	auto phi = [&](double t) { return f(xk + hk * t); };
 	const double tau = 0.1 * sqrt(epsilon);
-	double a = -5, b = 5;
+	double a = -10, b = 10;
 	auto Derivative = [&](double t) -> double { return (phi(t + tau) - phi(t - tau)) / (2 * tau); };
 	double d_phi_a = Derivative(a), d_phi_b = Derivative(b);
 	if (std::fabs(d_phi_a) < epsilon) return a;
@@ -101,6 +94,7 @@ double Task1::NewtonMethod2(double s, double (*f)(Vector x), Vector& xk, Vector&
 
 	while (fabs(phi(s)) > epsilon)
 	{
+		cout << "Po4erevin" << endl;
 		s = s - phi(s) / d_phi(s);
 	}
 	return s;
@@ -140,8 +134,14 @@ void Task1::FirstMethod(double(*f)(Vector x), const double epsilon, Vector& x0, 
 		xk1 = xk + hk * alpha_k;
 		diff_iter = xk1 - xk;
 		difference_norm_sqr = norm_sqr(diff_iter);
-		diff_f = std::abs(f(xk1) - f(xk));
+		diff_f = std::fabs(f(xk1) - f(xk));
 		grad_norm_sqr = norm_sqr(Df);
+
+		cout << "Df = " << Df;
+		cout << "alpha_k = " << alpha_k << endl;
+		cout << "xk = " << xk;
+		cout << "xk+1 = " << xk1;
+		cout << difference_norm_sqr << "\t" << diff_f << "\t" << grad_norm_sqr << endl << endl;
 
 		xk = xk1;
 		iterations++;
@@ -205,7 +205,7 @@ void Task1::SecondMethod(double (*f)(Vector x), const double epsilon, Vector& x0
 			}
 		}
 		He.Move(der2f);
-
+		cout << He;
 		hk = He.Gauss(Df) * (-1);
 		//alpha_k = NewtonMethod(f, xk, hk, epsilon);
 		alpha_k = NewtonMethod2(0.5, f, xk, hk, epsilon);
@@ -217,7 +217,7 @@ void Task1::SecondMethod(double (*f)(Vector x), const double epsilon, Vector& x0
 
 		cout << "xk = " << xk << endl;
 		cout << "alpha_k = " << alpha_k << endl;
-		//cout << "Df = " << Df << endl;
+		cout << "Df = " << Df << endl;
 
 		xk = xk1;
 		iterations++;
@@ -232,9 +232,9 @@ void Task1::SecondMethod(double (*f)(Vector x), const double epsilon, Vector& x0
 void Task1::main_func()
 {
 	double (*f)(Vector x);
-	f = f5;
+	f = f4;
 	double epsilon = 1e-4;
-	vector<double> x00(3);
+	vector<double> x00(2);
 	cout << "Enter the initial point: " << endl;
 	for (int i = 0; i < x00.size(); i++) cin >> x00[i];
 

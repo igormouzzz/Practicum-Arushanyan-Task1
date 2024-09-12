@@ -11,7 +11,7 @@ double l2_norm(Vector& x)
 double l2_norm_square(Vector& x)
 {
 	//return std::accumulate(x.v.begin(), x.v.end(), 0, [](double total, double value) { return total + value * value; });
-	double s = 0;
+	double s = 0; //for_each(x.v.begin(), x.v.end(), [&s](double x) {s += x; });
 	for (int i = 0; i < x.v.size(); i++) s += x.v[i] * x.v[i];
 	return s;
 }

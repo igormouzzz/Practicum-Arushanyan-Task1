@@ -39,7 +39,7 @@ double f7(Vector x)
 double f8(Vector x)
 {
 	double x1 = x.v[0], x2 = x.v[1];
-	return 0;
+	return x1 * x1 * x1 + x2 * x2 * x2 - 3 * x1 * x2;
 }
 double f9(Vector x)
 {
