@@ -24,8 +24,6 @@ public:
 	friend double l2_norm_square(Vector& x);
 	friend double l_inf_norm(Vector& x);
 
-	friend ostream& operator<<(ostream& cout, Vector& b);
-
 	friend double f1(Vector x);
 	friend double f2(Vector x);
 	friend double f3(Vector x);
@@ -39,5 +37,5 @@ public:
 	friend double f11(Vector x);
 	friend double f12(Vector x);
 
-	friend double g(Vector x);
+	friend ostream& operator<<(ostream& cout, Vector& b);
 };

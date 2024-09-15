@@ -189,7 +189,7 @@ Matrix Matrix::Inv2()
 	Y.a[0][1] = -a[0][1];
 	return Y * detinv;
 }
-Matrix Matrix::Inversed(Matrix& Inv)
+void Matrix::Inversed(Matrix& Inv)
 {
 	Matrix Y(N, 2 * N);
 	double temp;
@@ -232,7 +232,6 @@ Matrix Matrix::Inversed(Matrix& Inv)
 			Y.a[i][j] = Y.a[i][j] / temp;
 		}
 	}
-	//Matrix Inv(N, N);
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -240,7 +239,6 @@ Matrix Matrix::Inversed(Matrix& Inv)
 			Inv.a[i][j] = Y.a[i][N + j];
 		}
 	}
-	//return Inv;
 }
 
 void Matrix::Move(vector<row> rows)

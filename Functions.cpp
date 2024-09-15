@@ -24,7 +24,7 @@ double f4(Vector x)
 double f5(Vector x)
 {
 	double x1 = x.v[0], x2 = x.v[1], x3 = x.v[2];
-	return x1 * x1 + x2 * x2 + x3 * x3;
+	return (x1 - 1) * (x1 - 1) + 10 * (x2 - 2) * (x2 - 2) +0.1 * (x3 - 3) * (x3 - 3);
 }
 double f6(Vector x)
 {
@@ -60,10 +60,4 @@ double f12(Vector x)
 {
 	double x1 = x.v[0], x2 = x.v[1], x3 = x.v[2];
 	return x1*x1 + 5*x2*x2 + 3*x3*x3 + 4*x1*x2 - 2*x1*x3 - 2*x2*x3;
-}
-
-double g(Vector x)
-{
-	double x1 = x.v[0], x2 = x.v[1];
-	return -cos(x1 * x1 + x2 * x2);
 }

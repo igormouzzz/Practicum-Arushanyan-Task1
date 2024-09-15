@@ -26,7 +26,7 @@ public:
 	Matrix T();
 	double Det2();
 	Matrix Inv2();
-	Matrix Inversed(Matrix& Inv);
+	void Inversed(Matrix& Inv);
 
 	void Move(vector<row> rows);
 	
